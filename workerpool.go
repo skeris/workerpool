@@ -21,7 +21,7 @@
         select {
           case message := <-wp.messages:
             t(message)
-          case end := <-wp.end:
+          case <-wp.end:
             return
         }
       }
