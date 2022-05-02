@@ -1,16 +1,16 @@
  package workerpool
 
  type WorkerPool struct {
-  messages chan []byte
+  messages chan interface{}
  }
 
  func New(buffer int) WorkerPool {
   return WorkerPool{
-    messages: make(chan []byte, buffer)
+    messages: make(chan interface{}, buffer)
   }
  }
 
- type Task func([]byte)
+ type Task func(interface{})
 
  func (wp WorkerPool) Delegate(t Task, width int) {
   for i := 0; i < width; i++ {
@@ -25,6 +25,6 @@
   }
  }
 
- func (wp WorkerPool) Throw(data []byte) {
+ func (wp WorkerPool) Throw(data interface{}) {
   wp.messages <-data
  }
